@@ -15,6 +15,12 @@ export default defineConfig({
 
   // 📂 Diretório onde ficam os testes (seguindo nossa estrutura UI)
   testDir: './tests/ui',
+  //  ✋ Ignorar testes na pasta de exemplos
+  reporter: [
+    ['list'],
+    ['allure-playwright']
+  ],
+
 
   // 🕒 Timeout global
   timeout: 30 * 1000,

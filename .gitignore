@@ -6,6 +6,9 @@
 > 📁 Coloque na raiz: `.gitignore`
 
 ```gitignore
+#Test
+test-results/
+
 # Logs
 logs/
 *.log
@@ -21,3 +24,22 @@ playwright/.cache/
 # Sistema
 .DS_Store
 *.tmp
+
+# Node
+node_modules/
+npm-debug.log
+package-lock.json
+
+# Playwright outputs
+test-results/
+playwright-report/
+allure-results/
+allure-report/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

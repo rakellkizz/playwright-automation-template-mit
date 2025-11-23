@@ -26,7 +26,7 @@ jobs:
 
       # RODAR TESTES COM ALLURE ATIVO
       - name: Run Playwright tests
-        run: npx playwright test --reporter=list,allure-playwright
+        run: npx playwright test --config=playwright.config.js
 
       # SALVAR ARTEFATOS DO ALLURE
       - name: Upload Allure Results

@@ -1,0 +1,23 @@
+
+---
+
+# ✅ **5. .gitignore — Arquivos que não devem ir para o Git**
+
+> 📁 Coloque na raiz: `.gitignore`
+
+```gitignore
+# Logs
+logs/
+*.log
+
+# Node
+node_modules/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Sistema
+.DS_Store
+*.tmp

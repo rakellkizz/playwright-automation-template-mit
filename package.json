@@ -1,0 +1,12 @@
+{
+  "name": "playwright-automation-template",
+  "version": "1.0.0",
+  "description": "Template profissional Playwright E2E com MIT",
+  "scripts": {
+    "test": "playwright test",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}

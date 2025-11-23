@@ -1,0 +1,62 @@
+name: Run Playwright Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  test:
+    name: Playwright E2E Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1) Checkout do repositório
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2) Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3) Instalar dependências do projeto
+      - name: Install dependencies
+        run: npm ci
+
+      # 4) Instalar os navegadores do Playwright
+      - name: Install Playwright Browsers
+        run: npx playwright install
+
+      # 5) Instalar dependências do Linux para o Playwright
+      - name: Install Playwright Linux Dependencies
+        run: sudo npx playwright install-deps
+
+      # 6) Rodar os testes 🎯
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      # 7) Upload do relatório HTML
+      - name: Upload Playwright HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7
+
+      # 8) Upload dos vídeos, screenshots e traces
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts
+          path: test-results
+          retention-days: 7
+
+      # 9) Upload dos resultados do Allure
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 7

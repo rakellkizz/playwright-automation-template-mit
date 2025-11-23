@@ -18,6 +18,8 @@ jobs:
         with:
           name: allure-results
           path: allure-results
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
 
       - name: Install Allure CLI
         run: |

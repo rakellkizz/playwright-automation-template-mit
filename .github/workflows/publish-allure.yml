@@ -3,30 +3,29 @@ name: Publish Allure Report
 on:
   workflow_run:
     workflows: ["Run Playwright Tests"]
-    types:
-      - completed
+    types: [completed]
 
 jobs:
-  wait-for-artifacts:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Aguarda 20s para garantir que os artifacts estejam disponíveis
-        run: sleep 20
-
   publish:
-    needs: wait-for-artifacts
     runs-on: ubuntu-latest
 
     steps:
+      # 1) Espera 15s para garantir que o artifact foi salvo
+      - name: Wait for artifacts
+        run: sleep 15
+
+      # 2) Checkout
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Allure results artifact
+      # 3) Baixar os resultados do Allure (AGORA CORRETO!)
+      - name: Download Allure Results
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
+          name: allure-results        # ← MESMO NOME DO WORKFLOW DE TESTES
           path: allure-results
 
+      # 4) Instalar Allure CLI
       - name: Install Allure CLI
         run: |
           sudo apt-get update
@@ -36,9 +35,11 @@ jobs:
           sudo mv allure-2.29.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
+      # 5) Gerar relatório Allure
       - name: Generate Allure report
         run: allure generate allure-results -o allure-report --clean
 
+      # 6) Deploy no GitHub Pages
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

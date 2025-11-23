@@ -2,7 +2,7 @@ name: Run Playwright Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
 
 jobs:
@@ -21,31 +21,31 @@ jobs:
         with:
           node-version: 18
 
-      # 3) Instalar dependências do projeto
+      # 3) Instalar dependências
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      # 4) Instalar os navegadores do Playwright
+      # 4) Instalar navegadores do Playwright
       - name: Install Playwright Browsers
         run: npx playwright install
 
-      # 5) Instalar dependências do Linux para o Playwright
+      # 5) Instalar dependências Linux do Playwright
       - name: Install Playwright Linux Dependencies
         run: sudo npx playwright install-deps
 
-      # 6) Rodar os testes 🎯
+      # 6) Rodar testes
       - name: Run Playwright tests
         run: npx playwright test
 
-      # 7) Upload do relatório HTML
-      - name: Upload Playwright HTML report
+      # 7) Relatório HTML
+      - name: Upload Playwright HTML Report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report
           retention-days: 7
 
-      # 8) Upload dos vídeos, screenshots e traces
+      # 8) Artefatos de vídeos, screenshots e traces
       - name: Upload test artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -53,15 +53,10 @@ jobs:
           path: test-results
           retention-days: 7
 
-            # 9) Upload dos resultados do Allure (usa a pasta test-results!)
-      - name: Upload Allure results
+      # 9) Upload dos results do Allure (usa test-results!)
+      - name: Upload Allure Results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: test-results
           retention-days: 7
-
-        # 10) Instalar Allure para captura de resultados
-      - name: Install Allure
-        run: npm install -D allure-playwright
-

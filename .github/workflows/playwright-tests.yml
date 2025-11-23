@@ -53,10 +53,10 @@ jobs:
           path: test-results
           retention-days: 7
 
-      # 9) Upload dos resultados do Allure
+            # 9) Upload dos resultados do Allure (usa a pasta test-results!)
       - name: Upload Allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: allure-results
+          path: test-results
           retention-days: 7

@@ -9,18 +9,31 @@
 //   • browsers desktop e mobile
 // ====================================================================================
 
+// ====================================================================================
+// 🎭 Playwright Config – Template Playwright Automação Raquel
+// Descrição: Configuração profissional, organizada e com Allure integrado.
+// Inclui:
+//   • Estrutura de testes em /tests/ui
+//   • Reporter Allure + HTML + JSON
+//   • Timeout otimizado
+//   • Traces, vídeos e screenshots
+//   • Browsers Desktop e Mobile
+// ====================================================================================
+
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
 
-  // 📂 Diretório onde ficam os testes (seguindo nossa estrutura UI)
+  // 📂 Diretório onde ficam os testes
   testDir: './tests/ui',
-  //  ✋ Ignorar testes na pasta de exemplos
-  reporter: [
-    ['list'],
-    ['allure-playwright']
-  ],
 
+  // 🧪 Reporters (sem duplicação!)
+  reporter: [
+    ['list'],                                         // Terminal bonito
+    ['allure-playwright'],                            // Allure Reports
+    ['html', { outputFolder: 'playwright-report', open: 'never' }], // Relatório HTML
+    ['json', { outputFile: 'playwright-report/report.json' }],      // JSON para CI/CD
+  ],
 
   // 🕒 Timeout global
   timeout: 30 * 1000,
@@ -30,13 +43,13 @@ export default defineConfig({
     baseURL: 'https://www.saucedemo.com',
     headless: true,
 
-    // 🎥 Grava vídeos para cada teste
+    // 🎥 Grava vídeos
     video: 'on',
 
-    // 📸 Screenshot somente em falhas
+    // 📸 Screenshot só nos erros
     screenshot: 'only-on-failure',
 
-    // 🔍 Gera trace para depuração profunda
+    // 🔍 Trace completo somente em falhas
     trace: 'retain-on-failure',
 
     // Esperas inteligentes
@@ -44,7 +57,7 @@ export default defineConfig({
     navigationTimeout: 15 * 1000,
   },
 
-  // 🖥️💻 Projetos (browsers)
+  // 💻🖥️ Projetos (browsers)
   projects: [
     {
       name: 'desktop-chrome',
@@ -60,13 +73,6 @@ export default defineConfig({
         baseURL: 'https://www.saucedemo.com',
       },
     },
-  ],
-
-  // 📊 Diretórios de relatórios
-  reporter: [
-    ['list'],                    // CLI bonito
-    ['html', { outputFolder: 'playwright-report', open: 'never' }],
-    ['json', { outputFile: 'playwright-report/report.json' }],
   ],
 
   // 📁 Onde salvar traces, vídeos e screenshots

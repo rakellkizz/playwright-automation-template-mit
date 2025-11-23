@@ -1,20 +1,9 @@
 // ====================================================================================
 // 🎭 Playwright Config – Template Playwright Automação Raquel
-// Descrição: Configuração padrão recomendada para novos projetos de automação.
-// Inclui:
-//   • baseURL (SauceDemo)
-//   • timeouts ajustados
-//   • diretórios de relatórios
-//   • traces, vídeos, screenshots
-//   • browsers desktop e mobile
-// ====================================================================================
-
-// ====================================================================================
-// 🎭 Playwright Config – Template Playwright Automação Raquel
 // Descrição: Configuração profissional, organizada e com Allure integrado.
 // Inclui:
 //   • Estrutura de testes em /tests/ui
-//   • Reporter Allure + HTML + JSON
+//   • Reporter Allure + HTML
 //   • Timeout otimizado
 //   • Traces, vídeos e screenshots
 //   • Browsers Desktop e Mobile
@@ -27,12 +16,11 @@ export default defineConfig({
   // 📂 Diretório onde ficam os testes
   testDir: './tests/ui',
 
-  // 🧪 Reporters (sem duplicação!)
+  // 🧪 Reporters corretos (sem duplicação!)
   reporter: [
-    ['list'],                                         // Terminal bonito
-    ['allure-playwright'],                            // Allure Reports
-    ['html', { outputFolder: 'playwright-report', open: 'never' }], // Relatório HTML
-    ['json', { outputFile: 'playwright-report/report.json' }],      // JSON para CI/CD
+    ['list'],                                // Reporter da CLI
+    ['allure-playwright'],                   // Reporter Allure (gera allure-results/)
+    ['html', { outputFolder: 'playwright-report', open: 'never' }]  // HTML
   ],
 
   // 🕒 Timeout global
@@ -43,13 +31,13 @@ export default defineConfig({
     baseURL: 'https://www.saucedemo.com',
     headless: true,
 
-    // 🎥 Grava vídeos
+    // 🎥 Vídeos sempre gravados
     video: 'on',
 
-    // 📸 Screenshot só nos erros
+    // 📸 Screenshot apenas em falhas
     screenshot: 'only-on-failure',
 
-    // 🔍 Trace completo somente em falhas
+    // 🔍 Trace SOMENTE em falhas (ótimo para depuração)
     trace: 'retain-on-failure',
 
     // Esperas inteligentes
@@ -57,7 +45,7 @@ export default defineConfig({
     navigationTimeout: 15 * 1000,
   },
 
-  // 💻🖥️ Projetos (browsers)
+  // 💻🖥️ Projetos (Browsers Desktop e Mobile)
   projects: [
     {
       name: 'desktop-chrome',
@@ -75,6 +63,6 @@ export default defineConfig({
     },
   ],
 
-  // 📁 Onde salvar traces, vídeos e screenshots
+  // 📁 Local onde salvaremos vídeos, screenshots e traces
   outputDir: 'test-results',
 });

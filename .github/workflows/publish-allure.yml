@@ -7,32 +7,36 @@ on:
       - completed
 
 jobs:
-  build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  wait-for-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Aguarda 20s para garantir que os artifacts estejam disponíveis
+        run: sleep 20
+
+  publish:
+    needs: wait-for-artifacts
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Allure Results
+      - name: Download Allure results artifact
         uses: actions/download-artifact@v4
         with:
           name: allure-results
           path: allure-results
 
-      # Instalar Allure CLI manualmente (zero erros, funciona sempre)
       - name: Install Allure CLI
         run: |
           sudo apt-get update
-          sudo apt-get install -y default-jre unzip wget
-          ALLURE_VERSION=2.29.0
-          wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/$ALLURE_VERSION/allure-commandline-$ALLURE_VERSION.zip -O allure.zip
-          unzip allure.zip -d allure-cli
-          sudo mv allure-cli/allure-$ALLURE_VERSION /opt/allure
-          sudo ln -sf /opt/allure/bin/allure /usr/bin/allure
+          sudo apt-get install -y openjdk-11-jre
+          wget https://github.com/allure-framework/allure2/releases/download/2.29.0/allure-2.29.0.tgz
+          tar -zxvf allure-2.29.0.tgz
+          sudo mv allure-2.29.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Generate Allure Report
+      - name: Generate Allure report
         run: allure generate allure-results -o allure-report --clean
 
       - name: Deploy Allure Report to GitHub Pages
@@ -40,4 +44,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
-          publish_branch: gh-pages

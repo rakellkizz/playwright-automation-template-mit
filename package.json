@@ -7,7 +7,7 @@
     "report": "playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.44.0",
+    "@playwright/test": "^1.56.1",
     "allure-playwright": "^3.4.2"
   }
 }

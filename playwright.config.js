@@ -32,14 +32,14 @@ export default defineConfig({
     headless: true,
 
     // 🎥 Vídeos sempre gravados
-    video: 'on',
+    video: 'retain-on-failure',
 
     // 📸 Screenshot apenas em falhas
     screenshot: 'only-on-failure',
 
     // 🔍 Trace SOMENTE em falhas (ótimo para depuração)
-    trace: 'retain-on-failure',
-
+    trace: 'on-first-retry',
+ 
     // Esperas inteligentes
     actionTimeout: 10 * 1000,
     navigationTimeout: 15 * 1000,
